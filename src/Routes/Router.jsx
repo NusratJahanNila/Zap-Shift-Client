@@ -1,0 +1,63 @@
+import { createBrowserRouter } from "react-router";
+import RootLayout from "../Layouts/RootLayout";
+import Home from "../Pages/Home/Home/Home";
+import Coverage from "../Pages/Coverage/Coverage";
+import Error404 from "../Pages/Error/Error404";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import AuthLayout from "../Layouts/AuthLayout";
+import Login from "../Pages/Auth/Login/Login";
+import Register from "../Pages/Auth/Register/Register";
+import Rider from "../Pages/Rider/Rider";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import SendParcel from "../Pages/SendParcel/SendParcel";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: RootLayout,
+    errorElement: <Error404></Error404>,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: '/rider',
+        element: <PrivateRoute>
+          <Rider></Rider>
+        </PrivateRoute>
+      },
+      {
+        path: '/send-parcel',
+        element: <PrivateRoute>
+          <SendParcel></SendParcel>
+        </PrivateRoute>
+      },
+      {
+        path: '/coverage',
+        Component: Coverage,
+        loader: () => fetch('/service-center.json').then(res => res.json())
+      },
+      {
+        path: '//about-us',
+        Component: AboutUs,
+      }
+    ]
+  },
+  {
+    path: '/',
+    element: <AuthLayout></AuthLayout>,
+    children: [
+      {
+        path: '/login',
+        Component: Login,
+      },
+      {
+        path: '/register',
+        Component: Register
+      }
+    ]
+  }
+]);
+
+export default router;
