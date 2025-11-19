@@ -1,81 +1,155 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
+import { useLoaderData } from 'react-router';
 
 const SendParcel = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    // api
+    const serviceCenters = useLoaderData();
+    // react hook form
+    const { register,control, handleSubmit,formState: { errors } } = useForm();
+    // duplicate rigions
+    const regionsData = serviceCenters.map(centers => centers.region)
+    // remove duplicate
+    const regions = [...new Set(regionsData)];
+    const senderRegion=useWatch({control,name:"sender-region"})
+    const receiverRegion=useWatch({control,name:"receiverRegion"})
 
+    // get districts of a particular region
+    const districtsByRegion= region =>{
+        const regionDistricts=serviceCenters.filter(center=>center.region === region);
+        const districts=regionDistricts.map(d=>d.district)
+        return districts;
+    }
+
+    // send percel
     const handleSendParcel = (data) => {
         console.log(data)
     }
     return (
         <div className="max-w-7xl mx-auto">
-            <div className='max-w-5xl mx-auto p-5 my-5 bg-white'>
-                <h2>Send Parcel</h2>
-                <p>Enter your parcel details</p>
+            <div className='max-w-5xl mx-auto p-5 my-5 bg-white rounded-2xl'>
+                <h2 className='text-3xl font-extrabold text-secondary my-3'>Send A Parcel</h2>
+                <p className='text-secondary font-bold my-3'>Enter your parcel details</p>
                 <form onSubmit={handleSubmit(handleSendParcel)}>
                     {/* sec-1 */}
                     <div className="">
                         {/* check box */}
-                        <div className="">
+                        <div className="space-x-3">
                             <label >
-                                <input type="radio" name="radio-7" className="radio" defaultChecked value="document" /> Document
+                                <input type="radio" {...register('parcelType', { required: true })} className="radio text-secondary" defaultChecked value="document" /> Document
                             </label>
                             <label>
-                                <input type="radio" name="radio-7" className="radio " />
+                                <input type="radio" {...register('parcelType', { required: true })} className="radio text-secondary" />
                                 Non-Document
                             </label>
                         </div>
+                        <div className="border border-gray-200 my-5"></div>
                         {/* parcel details */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                             <div className="grid grid-cols-1 mt-1">
                                 <label className="label">Parcel Name</label>
-                                <input type="text" className="input w-full" placeholder="Parcel Name" />
+                                <input type="text" {...register('parcel-name', { required: true })} className="input w-full" placeholder="Parcel Name" />
                             </div>
+                            {errors?.parcel-name.type==='required' && <p className='text-red-600'>Parcel name is required</p>}
                             <div className="grid grid-cols-1">
                                 <label className="label">Parcel Weight (KG)</label>
-                                <input type="text" className="input w-full" placeholder="Parcel Weight (KG)" />
+                                <input type="text" {...register('parcel-weight', { required: true })} className="input w-full" placeholder="Parcel Weight (KG)" />
                             </div>
                         </div>
                     </div>
-                    <div className="border border-gray-300 mt-5"></div>
+                    <div className="border border-gray-200 mt-10"></div>
                     {/* sec-2 */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 mt-5">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 ">
                         {/* sender details */}
-                        <div className="border">
+                        <div>
                             <div className="card-body">
                                 <h1 className="text-secondary font-bold">Sender's Details</h1>
                                 <fieldset className="fieldset">
+                                    {/* name */}
                                     <label className="label">Sender's name</label>
-                                    <input type="email" className="input" placeholder="Email" />
-
+                                    <input type="text" {...register('sender-name', { required: true })} className="input w-full" placeholder="Sender's name" />
+                                    {/* email */}
+                                    <label className="label">Sender's Email</label>
+                                    <input type="email" {...register('sender-email', { required: true })} className="input w-full" placeholder="Sender's email" />
+                                    {/* address */}
                                     <label className="label">Address</label>
-                                    <input type="email" className="input" placeholder="Email" />
-
+                                    <input type="text" {...register('sender-address', { required: true })} className="input w-full" placeholder="Address" />
+                                    {/* phone */}
                                     <label className="label">Sender Phone No</label>
-                                    <input type="email" className="input" placeholder="Email" />
+                                    <input type="text" {...register('sender-phone', { required: true })} className="input w-full" placeholder="Phone No" />
+                                    {/* district */}
+                                    <label className="label">Your Region</label>
+                                    <select defaultValue="Select Your Region" {...register('sender-region', { required: true })} className="select w-full">
+                                        <option disabled={true}>Select Your Region</option>
+                                        {
+                                            regions.map((region,index) =><option key={index} value={region}>{region}</option>)
+                                        }
+                                        
+                                    </select>
 
                                     <label className="label">Your District</label>
-                                    <input type="email" className="input" placeholder="Email" />
-
+                                    <select defaultValue="Select Your District" {...register('senderDistrict', { required: true })} className="select w-full">
+                                        <option disabled={true}>Select Your District</option>
+                                        {
+                                            districtsByRegion(senderRegion).map((region,index) =><option key={index} value={region}>{region}</option>)
+                                        }
+                                        
+                                    </select>
+                                    
+                                    {/* instruction */}
                                     <label className="label">Pickup Instruction</label>
-                                    <input type="password" className="input" placeholder="Password" />
+                                    <textarea rows={3} cols={5} {...register('senderTxt')} className='border border-gray-200 p-2 rounded-lg' placeholder='Pickup Instruction'></textarea>
                                 </fieldset>
                             </div>
                         </div>
                         {/* receiver details */}
-                        <div className="border">
+                        <div>
                             <div className="card-body">
                                 <h1 className="text-secondary font-bold">Receiver Details</h1>
                                 <fieldset className="fieldset">
-                                    <label className="label">Email</label>
-                                    <input type="email" className="input" placeholder="Email" />
-                                    <label className="label">Password</label>
-                                    <input type="password" className="input" placeholder="Password" />
-                                    <div><a className="link link-hover">Forgot password?</a></div>
-                                    <button className="btn btn-neutral mt-4">Login</button>
+                                    {/* name */}
+                                    <label className="label">Receiver's name</label>
+                                    <input type="text" {...register('receiver-name', { required: true })} className="input w-full" placeholder="Receiver's name" />
+                                    {/* email */}
+                                    <label className="label">Receiver's Email</label>
+                                    <input type="email" {...register('receiver-email', { required: true })} className="input w-full" placeholder="Receiver's email" />
+                                    {/* address */}
+                                    <label className="label">Address</label>
+                                    <input type="text" {...register('receiver-address', { required: true })} className="input w-full" placeholder="Address" />
+                                    {/* phone */}
+                                    <label className="label">Receiver Phone No</label>
+                                    <input type="text" {...register('receiver-phone', { required: true })} className="input w-full" placeholder="Phone No" />
+
+                                    {/* district */}
+                                    <label className="label">Receiver's Region</label>
+                                    <select defaultValue="Select Your Region" {...register('receiverRegion', { required: true })} className="select w-full">
+                                        <option disabled={true}>Select Your Region</option>
+                                        {
+                                            regions.map((region,index) =><option key={index} value={region}>{region}</option>)
+                                        }
+                                        
+                                    </select>
+
+                                    <label className="label">Receiver's District</label>
+                                    <select defaultValue="Select Your District" {...register('receiverDistrict', { required: true })} className="select w-full">
+                                        <option disabled={true}>Select Your District</option>
+                                        {
+                                            districtsByRegion(receiverRegion).map((region,index) =><option key={index} value={region}>{region}</option>)
+                                        }
+                                        
+                                    </select>
+
+                                    {/* instruction */}
+                                    <label className="label">Delivery Instruction</label>
+                                    <textarea rows={3} cols={5} {...register('receiverTxt')} className='border border-gray-200 p-2 rounded-lg' placeholder='Delivery Instruction'></textarea>
                                 </fieldset>
                             </div>
                         </div>
+                    </div>
+                    {/* sec-3 */}
+                    <div className="mt-5">
+                        <p>* PickUp Time-4pm-7pm-Approx.</p>
+                        <button className='bg-primary btn rounded-2xl px-5 mt-3'>Proceed to Confirm Booking</button>
                     </div>
                 </form>
             </div>
