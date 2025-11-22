@@ -53,6 +53,8 @@ const SendParcel = () => {
                 cost = minCost + extraCharge;
             }
         }
+        // send cost to db
+        data.cost=cost;
         Swal.fire({
             title: "Agree with the cost?",
             text: `You will be charged ${cost}Tk`,
@@ -135,9 +137,6 @@ const SendParcel = () => {
                                         className="input w-full"
                                         placeholder="Sender's email"
                                     />
-                                    {/* address */}
-                                    <label className="label">Address</label>
-                                    <input type="text" {...register('senderAddress', { required: true })} className="input w-full" placeholder="Address" />
                                     {/* phone */}
                                     <label className="label">Sender Phone No</label>
                                     <input type="text" {...register('senderPhone', { required: true })} className="input w-full" placeholder="Phone No" />
@@ -177,9 +176,6 @@ const SendParcel = () => {
                                     {/* email */}
                                     <label className="label">Receiver's Email</label>
                                     <input type="email" {...register('receiverEmail', { required: true })} className="input w-full" placeholder="Receiver's email" />
-                                    {/* address */}
-                                    <label className="label">Address</label>
-                                    <input type="text" {...register('receiverAddress', { required: true })} className="input w-full" placeholder="Address" />
                                     {/* phone */}
                                     <label className="label">Receiver Phone No</label>
                                     <input type="text" {...register('receiverPhone', { required: true })} className="input w-full" placeholder="Phone No" />
