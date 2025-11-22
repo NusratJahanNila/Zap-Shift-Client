@@ -6,10 +6,15 @@ import useAuth from '../../../Hooks/useAuth';
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const links = <>
-        <li><NavLink to=''>Services</NavLink></li>
-        <li><NavLink to='/coverage'>Coverage</NavLink></li>
-        <li><NavLink to='/about-us'>About Us</NavLink></li>
-        <li><NavLink to='/send-parcel'>Send Parcel</NavLink></li>
+        <li><NavLink className='text-secondary font-bold' to=''>Services</NavLink></li>
+        <li><NavLink className='text-secondary font-bold' to='/coverage'>Coverage</NavLink></li>
+        <li><NavLink className='text-secondary font-bold' to='/about-us'>About Us</NavLink></li>
+        <li><NavLink className='text-secondary font-bold' to='/send-parcel'>Send Parcel</NavLink></li>
+        {
+            user && <>
+                <li><NavLink className='text-secondary font-bold' to='/dashboard/my-parcels'>Dashboard</NavLink></li>
+            </>
+        }
     </>
 
     // logout
