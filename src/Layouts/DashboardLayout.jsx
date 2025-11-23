@@ -18,12 +18,14 @@ const DashboardLayout = () => {
                     <div className="text-xl"><Logo></Logo></div>
                 </nav>
                 {/* Page content here */}
-                <Outlet></Outlet>
+                <div className="bg-base-300 min-h-screen">
+                    <Outlet></Outlet>
+                </div>
             </div>
 
             <div className="drawer-side is-drawer-close:overflow-visible">
                 <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
+                <div className="flex min-h-full flex-col items-start bg-white shadow-sm is-drawer-close:w-14 is-drawer-open:w-64">
                     {/* Sidebar content here */}
                     <ul className="menu w-full grow">
                         {/* List item */}
@@ -36,8 +38,9 @@ const DashboardLayout = () => {
                         </li>
 
                         {/* Our list items */}
+                        {/* my parcels */}
                         <li>
-                            <div className="is-drawer-close:tooltip is-drawer-close:tooltip-right">
+                            <div className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="My Parcels">
                                 <div >
                                     <FaBoxes className="my-1.5 inline-block size-4" />
                                 </div>

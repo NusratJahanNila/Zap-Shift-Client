@@ -12,6 +12,9 @@ import PrivateRoute from "./PrivateRoute/PrivateRoute";
 import SendParcel from "../Pages/SendParcel/SendParcel";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import { ClimbingBoxLoader } from "react-spinners";
+import ParcelsDetails from "../Pages/Dashboard/ParcelsDetails/ParcelsDetails";
 
 const router = createBrowserRouter([
   {
@@ -35,16 +38,16 @@ const router = createBrowserRouter([
           <SendParcel></SendParcel>
         </PrivateRoute>,
         loader: () => fetch('/service-center.json').then(res => res.json()),
-        hydrateFallbackElement:<p>Loading...</p>
+        hydrateFallbackElement:<ClimbingBoxLoader color='#CAEB66' className='mx-auto min-h-[50vh] '/>
       },
       {
         path: '/coverage',
         Component: Coverage,
         loader: () => fetch('/service-center.json').then(res => res.json()),
-        hydrateFallbackElement:<p>Loading...</p>
+        hydrateFallbackElement:<ClimbingBoxLoader color='#CAEB66' className='mx-auto min-h-[50vh] '/>
       },
       {
-        path: '//about-us',
+        path: '/about-us',
         Component: AboutUs,
       }
     ]
@@ -52,6 +55,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <AuthLayout></AuthLayout>,
+    errorElement: <Error404></Error404>,
     children: [
       {
         path: '/login',
@@ -68,10 +72,19 @@ const router = createBrowserRouter([
     element: <PrivateRoute>
       <DashboardLayout></DashboardLayout>
     </PrivateRoute>,
+    errorElement: <Error404></Error404>,
     children: [
       {
         path: '/dashboard/my-parcels',
         Component: MyParcels,
+      },
+      {
+        path: '/dashboard/payment/:parcelId',
+        Component: Payment,
+      },
+      {
+        path: '/dashboard/parcelsDetails/:parcelId',
+        Component: ParcelsDetails,
       },
     ]
   },

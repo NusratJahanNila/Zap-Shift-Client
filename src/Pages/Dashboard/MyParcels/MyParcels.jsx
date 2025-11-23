@@ -6,6 +6,8 @@ import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import { Link } from 'react-router';
+
 
 const MyParcels = () => {
     // userdata
@@ -64,7 +66,8 @@ const MyParcels = () => {
                             <th>#</th>
                             <th>Name</th>
                             <th>Cost</th>
-                            <th>Payment Status</th>
+                            <th>Payment</th>
+                            <th>Delivery Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -74,12 +77,21 @@ const MyParcels = () => {
                                 <th>{index + 1}</th>
                                 <td>{parcel.parcelName}</td>
                                 <td>{parcel.cost}</td>
+                                <td>
+                                    {
+                                        parcel.paymentStatus==='paid'?
+                                        <span className='text-green-800'>Paid</span>
+                                        :
+                                        <Link to={`/dashboard/payment/${parcel._id}`} className='btn bg-primary rounded-2xl text-black'>Pay
+                                        </Link>
+                                    }
+                                </td>
                                 <td>{'pending'}</td>
                                 <td className='space-x-1.5'>
                                     {/* view */}
-                                    <button className='btn btn-square hover:bg-primary'>
+                                    <Link to={`/dashboard/parcelsDetails/${parcel._id}`} className='btn btn-square hover:bg-primary'>
                                         <FaMagnifyingGlass />
-                                    </button>
+                                    </Link>
                                     {/* edit */}
                                     <button className='btn btn-square hover:bg-primary'>
                                         <FiEdit />
