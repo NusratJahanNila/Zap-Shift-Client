@@ -33,7 +33,9 @@ const router = createBrowserRouter([
         path: '/rider',
         element: <PrivateRoute>
           <Rider></Rider>
-        </PrivateRoute>
+        </PrivateRoute>,
+        loader: () => fetch('/service-center.json').then(res => res.json()),
+        hydrateFallbackElement:<ClimbingBoxLoader color='#CAEB66' className='mx-auto min-h-[50vh] '/>
       },
       {
         path: '/send-parcel',
