@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo/Logo';
 import { MdOutlinePayments } from "react-icons/md";
-
+import { RiMotorbikeFill } from "react-icons/ri";
 import { FaBoxes } from 'react-icons/fa';
 
 const DashboardLayout = () => {
@@ -58,6 +58,17 @@ const DashboardLayout = () => {
                                 </div>
                                 <span className="is-drawer-close:hidden">
                                     <NavLink to='/dashboard/payment-history'>Payment History</NavLink>
+                                </span>
+                            </div>
+                        </li>
+                        {/* Approve Rider */}
+                        <li>
+                            <div className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Approve Rider">
+                                <div >
+                                    <RiMotorbikeFill className="my-1.5 inline-block size-4" />
+                                </div>
+                                <span className="is-drawer-close:hidden">
+                                    <NavLink to='/dashboard/approve-rider'>Approve Rider</NavLink>
                                 </span>
                             </div>
                         </li>
