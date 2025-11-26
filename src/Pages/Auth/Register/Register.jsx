@@ -4,28 +4,27 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../Hooks/useAuth';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 const Register = () => {
+    // axios
+    const axiosSecure=useAxiosSecure();
     // location
     const location = useLocation();
     const navigate = useNavigate();
-    console.log('locaton in register', location)
     // Auth context
     const { registerUser, updateUserProfile } = useAuth();
-
     // react hook form
     const { register, handleSubmit, formState: { errors } } = useForm();
 
 
 
     const handleRegister = (data) => {
-        console.log('after register', data.photo[0]);
         const profileImg = data.photo[0];
 
         // register
         registerUser(data.email, data.password)
-            .then(result => {
-                console.log(result);
+            .then(() => {
                 //1. store image in form data
                 const formData = new FormData();
                 formData.append('image', profileImg);
@@ -35,12 +34,25 @@ const Register = () => {
 
                 axios.post(img_API_Url, formData)
                     .then(res => {
-                        console.log('after img upload', res.data.data.url);
+                        const photoURL= res.data.data.url;
+                        console.log('name from register: ',data.name)
+                        // create user in the database
+                        const userInfo={
+                            email: data.email,
+                            displayName: data.name,
+                            photoURL: photoURL
+                        }
+                        axiosSecure.post('/users',userInfo)
+                        .then(res=>{
+                            if(res.data.insertedId){
+                                console.log('user created in the database')
+                            }
+                        })
 
                         //3. update profile to firebase
                         const userProfile = {
                             displayName: data.name,
-                            photoURL: res.data.data.url
+                            photoURL: photoURL
                         }
                         updateUserProfile(userProfile)
                             .then(() => {

@@ -9,7 +9,7 @@ import star from '../../../assets/brands/star.png'
 import start_people from '../../../assets/brands/start_people.png'
 import { Autoplay } from 'swiper/modules';
 const Brands = () => {
-    const brands = [amazon, casio, moonstar, randstad, star, start_people]
+    const brands = [amazon, casio, moonstar, randstad, star, start_people,amazon, casio, moonstar, randstad, star, start_people,amazon, casio, moonstar, randstad, star, start_people]
     return (
         <div className="">
             <h2 className='text-secondary font-bold text-2xl my-5 text-center'>We've helped thousands of sales teams</h2>

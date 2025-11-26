@@ -27,6 +27,7 @@ const PaymentHistory = () => {
                                 <th>Parcel Name</th>
                                 <th>Amount</th>
                                 <th>Transaction Id</th>
+                                <th>Paid Time</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -37,6 +38,7 @@ const PaymentHistory = () => {
                                     <td>{payment.parcelName}</td>
                                     <td>${payment.amount}</td>
                                     <td>{payment.transactionId}</td>
+                                    <td>{payment.paidAt}</td>
                                     <td>
                                         <button className='btn bg-primary'>View</button>
                                     </td>
