@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { FaRegTrashAlt, FaUserCheck } from "react-icons/fa";
 import { MdGroupRemove } from "react-icons/md";
 import Swal from 'sweetalert2';
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { Link } from 'react-router';
 
 const ApproveRider = () => {
     // axios
@@ -72,6 +74,9 @@ const ApproveRider = () => {
                                     </td>
                                     <td>{rider.riderDistrict}</td>
                                     <td className='space-x-1.5'>
+                                        <Link to={`/dashboard/rider-details/${rider._id}`} className='btn bg-primary '>
+                                            <FaMagnifyingGlass/>
+                                        </Link>
                                         <button onClick={() => handleApproval(rider)} className='btn bg-primary '>
                                             <FaUserCheck />
                                         </button>

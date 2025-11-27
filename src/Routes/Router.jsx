@@ -19,6 +19,8 @@ import PaymentSuccess from "../Pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../Pages/Dashboard/Payment/PaymentCancel";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory/PaymentHistory";
 import ApproveRider from "../Pages/Dashboard/ApproveRider/ApproveRider";
+import RiderDetails from "../Pages/Rider/RiderDetails";
+import UsersManagement from "../Pages/Dashboard/UsersManagement/UsersManagement";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
         loader: () => fetch('/service-center.json').then(res => res.json()),
         hydrateFallbackElement:<ClimbingBoxLoader color='#CAEB66' className='mx-auto min-h-[50vh] '/>
       },
+      
       {
         path: '/send-parcel',
         element: <PrivateRoute>
@@ -107,6 +110,10 @@ const router = createBrowserRouter([
       {
         path: '/dashboard/approve-rider',
         Component: ApproveRider,
+      },
+      {
+        path: '/dashboard/users-management',
+        Component: UsersManagement,
       },
     ]
   },

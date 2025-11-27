@@ -11,8 +11,8 @@ const Login = () => {
     const navigate=useNavigate();
 
     // auth
-    const {loginUser,setLoading}=useAuth;
-    const {register,handleSubmit,formState: { errors },}=useForm();
+    const {loginUser,setLoading}=useAuth();
+    const {register,handleSubmit,formState: { errors }}=useForm();
     const handleLogin=(data)=>{
         console.log(data);
         loginUser(data.email,data.password)
