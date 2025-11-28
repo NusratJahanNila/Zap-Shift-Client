@@ -17,7 +17,7 @@ const UsersManagement = () => {
     })
 
     // user role k admin a convert kora
-    const handleMakeUser = user => {
+    const handleMakeAdmin = user => {
         const roleInfo = {
             role: 'admin',
         }
@@ -32,7 +32,7 @@ const UsersManagement = () => {
             confirmButtonText: "Yes, make Admin!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/${user._id}`, roleInfo)
+                axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.modifiedCount) {
@@ -66,7 +66,7 @@ const UsersManagement = () => {
             confirmButtonText: "Yes, Remove him/her!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.patch(`/users/${user._id}`, roleInfo)
+                axiosSecure.patch(`/users/${user._id}/role`, roleInfo)
                     .then(res => {
                         console.log(res.data)
                         if (res.data.modifiedCount) {
@@ -127,7 +127,7 @@ const UsersManagement = () => {
                                         {
                                             user.role === 'admin' ? <button onClick={() => handleRemoveAdmin(user)} className='btn bg-red-600 '>
                                                 <FaUserMinus />
-                                            </button> : <button onClick={() => handleMakeUser(user)} className='btn bg-green-600 '>
+                                            </button> : <button onClick={() => handleMakeAdmin(user)} className='btn bg-green-600 '>
                                                 <FaUserShield />
                                             </button>
 
