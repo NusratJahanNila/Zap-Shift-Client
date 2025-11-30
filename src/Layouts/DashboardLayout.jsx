@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet } from 'react-router';
 import Logo from '../Components/Logo/Logo';
 import { MdOutlinePayments } from "react-icons/md";
 import { RiMotorbikeFill } from "react-icons/ri";
-import { FaBoxes, FaUser } from 'react-icons/fa';
+import { FaBoxes, FaTasks, FaUser } from 'react-icons/fa';
 import useRole from '../Hooks/useRole';
 import { MdAssignmentInd } from "react-icons/md";
 
@@ -98,6 +98,22 @@ const DashboardLayout = () => {
                                         </div>
                                         <span className="is-drawer-close:hidden">
                                             < h2>Users Management</h2>
+                                        </span>
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
+                        {/* Private links , for Riders */}
+                        {
+                            role === 'rider' && <>
+                                {/* Assigned Deliveries */}
+                                <li>
+                                    <NavLink to='/dashboard/assigned-deliveries' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Assigned Deliveries">
+                                        <div >
+                                            <FaTasks className="my-1.5 inline-block size-4" />
+                                        </div>
+                                        <span className="is-drawer-close:hidden">
+                                            < h2>Assigned Deliveries</h2>
                                         </span>
                                     </NavLink>
                                 </li>
