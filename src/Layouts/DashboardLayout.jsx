@@ -6,6 +6,7 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { FaBoxes, FaTasks, FaUser } from 'react-icons/fa';
 import useRole from '../Hooks/useRole';
 import { MdAssignmentInd } from "react-icons/md";
+import { SiGoogletasks } from "react-icons/si";
 
 const DashboardLayout = () => {
     const {role}=useRole();
@@ -114,6 +115,17 @@ const DashboardLayout = () => {
                                         </div>
                                         <span className="is-drawer-close:hidden">
                                             < h2>Assigned Deliveries</h2>
+                                        </span>
+                                    </NavLink>
+                                </li>
+                                {/* Completed Deliverise */}
+                                <li>
+                                    <NavLink to='/dashboard/completed-deliveries' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Completed Deliveries">
+                                        <div >
+                                            <SiGoogletasks  className="my-1.5 inline-block size-4" />
+                                        </div>
+                                        <span className="is-drawer-close:hidden">
+                                            < h2>Completed Deliveries</h2>
                                         </span>
                                     </NavLink>
                                 </li>
